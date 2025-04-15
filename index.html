@@ -10,8 +10,6 @@
         margin: 0;
         padding: 0;
         height: 100vh;
-        overflow: hidden;
-        cursor: url(oth505.cur), auto;
       }
 
       .pixel {
@@ -26,16 +24,14 @@
         height: 600px;
         border: 1px solid black;
         background: white;
+        cursor: url(oth505.cur), auto;
       }
 
       #container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: start;
-        height: 100vh;
-        padding-top: 20px;
-        gap: 20px;
+        gap: 10px;
       }
     </style>
   </head>
@@ -54,7 +50,7 @@
         .on('click', clear)
 
       function clear() {
-        //got this code from stackexchange
+        //got this code from stackoverflow https://stackoverflow.com/questions/4777077/removing-elements-by-class-name
         const elements = document.getElementsByClassName('pixel');
         while (elements.length > 0) {
           elements[0].parentNode.removeChild(elements[0]);
@@ -93,24 +89,15 @@
       function scatterEmoji(e) {
         if (mouseIsDown) {
           const size = changeSize();
-          const {
-            innerWidth: w,
-            innerHeight: h
-          } = window;
-
-          const hue = (e.clientX / w) * 360;
-          const saturation = 80; // fixed saturation
-          const lightness = (e.clientY / h) * 60 + 20;
+          const h = (e.clientX / 800) * 360;
+          const l = (e.clientY / 600) * 60 + 20;
           const rotate = e.clientX % 360;
 
           const canvas = document.getElementById('canvas');
           const bounds = canvas.getBoundingClientRect();
-          if (
-            e.clientX < bounds.left + 1.1 * size ||
-            e.clientX > bounds.right - 1.1 * size ||
-            e.clientY < bounds.top + 1.1 * size ||
-            e.clientY > bounds.bottom - 1.1 * size
-          ) {
+          if (e.clientX < bounds.left + 1.1 * size || e.clientX > bounds.right - 1.1 * size || e.clientY < bounds.top + 1.1 * size || e.clientY > bounds.bottom - 1.1 * size
+          ) 
+          {
             return;
           }
 
@@ -123,9 +110,9 @@
               top: `${e.clientY}px`,
               width: `${size}px`,
               height: `${size}px`,
-              backgroundColor: `hsl(${hue}, ${saturation}%, ${lightness}%)`,
+              backgroundColor: `hsl(${h}, 80%, ${l}%)`,
               transform: `rotate(${rotate}deg)`,
-              boxShadow: `2px 2px 2px black`
+              boxShadow: `2px 2px 5px black`
             })
             .addTo('body');
         }
